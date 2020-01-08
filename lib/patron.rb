@@ -60,6 +60,7 @@ class Patron
   end
 
   def update(attributes)
+    # binding.pry
     if (attributes.has_key?(:name)) && (attributes.fetch(:name) != nil)
       @name = attributes.fetch(:name)
       DB.exec("UPDATE patrons SET name = '#{@name}' WHERE id = #{@id};")
@@ -76,6 +77,10 @@ class Patron
   def delete
     DB.exec("DELETE FROM books_patrons WHERE patron_id = #{@id};")
     DB.exec("DELETE FROM patrons WHERE id = #{@id};")
+  end
+
+  def return_book(book_id)
+    DB.exec("DELETE FROM books_patrons WHERE book_id = #{book_id} AND patron_id = #{@id};")
   end
 
   def books

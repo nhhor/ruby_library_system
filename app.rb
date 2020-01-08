@@ -55,6 +55,18 @@ patch ('/books/:id') do
   @book = Book.find(params[:id].to_i())
   @book.update(params[:name])
   redirect to('/books')
+
+
+# elsif (params["return_book"] = "true")
+#   puts "COOL2"
+#   @book = Book.find(params[:id].to_i())
+#   @book.return_book()
+#   redirect to('/books')
+#
+#   Patron.return_book
+#   erb(:patron)
+
+
 end
 
 delete ('/books/:id') do
@@ -62,6 +74,8 @@ delete ('/books/:id') do
   @book.delete()
   redirect to('/books')
 end
+
+
 
 # get ('/books/:id/songs/:song_id') do
 #   @song = Song.find(params[:song_id].to_i())
@@ -111,6 +125,7 @@ get ('/patrons/:id') do
   @patron = Patron.find(params[:id].to_i())
   if @patron != nil
     erb(:patron)
+
   else
     erb(:book_error)
   end
@@ -127,24 +142,26 @@ post ('/patrons') do
   redirect to('/patrons')
 end
 
-# post ('/patrons/:id') do
-#   name = params[:patron_name]
-#   @patron = Patron.new({:name => name, :id => nil})
-#   @patron.save()
-#   redirect to('/patrons')
-# end
-
-
 post ('/patrons/:id') do
+  if params[:book_name]
+
   name = params[:book_name]
   id = params[:id]
-  # if book this:
+  # binding.pry
   @patron = Patron.find(params[:id].to_i())
   @patron.update({:book_name => name})
-  # if not boo, this:
-  # book = Book.new({:name => name, :id => id})
-  # book.save()
   redirect to('/patrons')
+elsif params[:book_id]
+
+
+
+# IF ELSE HERE ????????????
+
+  @patron = Patron.find(params[:id].to_i())
+  @patron.return_book(params[:book_id].to_i)
+  redirect to('/patrons')
+end
+
 end
 
 
@@ -159,3 +176,10 @@ delete ('/patrons/:id') do
   @patron.delete()
   redirect to('/patrons')
 end
+
+
+# return_book ('/patrons/:id') do
+#   @patron = Patron.find(params[:id].to_i())
+#   @patron.return_book()
+#   redirect to('/patrons')
+# end

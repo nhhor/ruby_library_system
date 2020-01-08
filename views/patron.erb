@@ -1,4 +1,3 @@
-
 <h2>Patron Name: <%= @patron.name %></h2>
 
 <h3>Patron Books</h3>
@@ -6,7 +5,13 @@
 <% if @patron.books %>
 <ul>
   <% @patron.books.each do |book| %>
-  <li><a href="/books/<%= book.id %>"><%= book.name %></a></li>
+  <li>
+    <form action="/patrons/<%= @patron.id() %>" method="post">
+      <a href="/books/<%= book.id %>"><%= book.name %></a> |
+      <input name="book_id" type="hidden" value="<%=book.id%>">
+      <button type="submit" class="btn btn-warning">Return book</button>
+    </form>
+  </li>
   <% end %>
 </ul>
 <% else %>
@@ -20,22 +25,14 @@
     <label for="book_name">Book name</label>
     <!-- <input id="book_name" name="book_name" class="form-control" type="text" required> -->
     <select name="book_name">
-      <!-- <option value="volvo">Volvo</option> -->
-
-
-
-
       <% @book = Book.available_books %>
       <% @book.each do |book| %>
       <option value="<%=book.name%>"><%= book.name %></option>
-      <% puts "book.id:", book.id %>
-
       <% end %>
+    </select> |
+    <button type="submit" class="btn btn-info">Checkout book</button>
 
-    </select>
   </div>
-
-  <button type="submit" class="btn">Checkout book</button>
 </form>
 
 

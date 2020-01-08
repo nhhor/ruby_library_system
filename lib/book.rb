@@ -20,17 +20,12 @@ class Book
   end
 
   def self.available_books
-    available_books = []
-
     unavailable_books = DB.exec("SELECT book_id FROM books_patrons")
     unavailable_books_id_array = []
-
     unavailable_books.each() do |result|
       unavailable_books_id_array.push(result.values)
     end
-
-    # binding.pry
-
+    available_books = []
     if unavailable_books_id_array != []
       query_of_ids =  DB.exec("SELECT * FROM books WHERE id NOT IN (#{unavailable_books_id_array.join(", ")});")
       query_of_ids.each() do |query|

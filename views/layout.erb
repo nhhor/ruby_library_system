@@ -1,13 +1,30 @@
+
+
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Nova Library</title>
-    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
-    <link rel="stylesheet" href="/styles.css">
-  </head>
-  <body>
-    <div class="container">
+<head>
+  <title>Nova Library</title>
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Nova Library</h1>
+
+    <div class="row">
+      <div class="col-md-3">
+        <a href="/books"><p class="btn-lg btn-primary">All Books</p></a>
+
+      </div>
+      <div class="col-md-3">
+        <a href="/patrons"><p class="btn-lg btn-info">Patrons</p></a>
+
+      </div>
+    </div>
+    <HR>
+
+
       <%= yield %>
     </div>
   </body>
-</html>
+  </html>
