@@ -86,19 +86,19 @@ class Patron
     results.each() do |result|
       result_id_array.push(result.values)
     end
-      if result_id_array != []
-    query_of_ids =  DB.exec("SELECT * FROM books WHERE id IN (#{result_id_array.join(", ")});")
-    query_of_ids.each() do |query|
-      book_id = query.fetch("id").to_i()
-      name = query.fetch("name")
-      books.push(Book.new({:name => name, :id => book_id}))
+    if result_id_array != []
+      query_of_ids =  DB.exec("SELECT * FROM books WHERE id IN (#{result_id_array.join(", ")});")
+      query_of_ids.each() do |query|
+        book_id = query.fetch("id").to_i()
+        name = query.fetch("name")
+        books.push(Book.new({:name => name, :id => book_id}))
+      end
+      books
+    else
+      puts "error"
+      NIL
     end
-    books
-  else
-    puts "error"
-    NIL
   end
-end
 
 
 

@@ -138,10 +138,12 @@ end
 post ('/patrons/:id') do
   name = params[:book_name]
   id = params[:id]
+  # if book this:
   @patron = Patron.find(params[:id].to_i())
-  book = Book.new({:name => name, :id => id})
-  book.save()
   @patron.update({:book_name => name})
+  # if not boo, this:
+  # book = Book.new({:name => name, :id => id})
+  # book.save()
   redirect to('/patrons')
 end
 
