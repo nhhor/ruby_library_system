@@ -39,6 +39,20 @@ This application was made as part of a coding project for Noah Horwitz & Eva Wie
 ||||
 
 
+CREATE DATABASE record_store;
+\c record_store;
+CREATE TABLE books (id serial PRIMARY KEY, name varchar);
+<!-- CREATE TABLE songs (id serial PRIMARY KEY, name varchar, book_id int); -->
+
+CREATE TABLE patrons (id serial PRIMARY KEY, name varchar);
+
+CREATE TABLE books_patrons (id serial PRIMARY KEY, patron_id int, book_id int);
+
+DROP DATABASE record_store_test;
+
+CREATE DATABASE record_store_test WITH TEMPLATE record_store;
+
+
 
 ## References
 

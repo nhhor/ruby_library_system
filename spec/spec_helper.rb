@@ -1,16 +1,16 @@
 require 'rspec'
 require 'pg'
-require 'album'
-require 'song'
+require 'book'
+# require 'song'
 require 'pry'
-require 'artist'
+require 'patron'
 
-DB = PG.connect({:dbname => 'record_store_test'})
+DB = PG.connect({:dbname => 'nova_library_test'})
 
 RSpec.configure do |config|
   config.after(:each) do
-    DB.exec("DELETE FROM albums *;")
-    DB.exec("DELETE FROM songs *;")
-    DB.exec("DELETE FROM artists *;")
+    DB.exec("DELETE FROM books *;")
+    # DB.exec("DELETE FROM songs *;")
+    DB.exec("DELETE FROM patrons *;")
   end
 end

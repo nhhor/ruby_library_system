@@ -1,159 +1,159 @@
 require('sinatra')
 require('sinatra/reloader')
-require('./lib/album')
-require('./lib/artist')
-require('./lib/song')
+require('./lib/book')
+require('./lib/patron')
+# require('./lib/song')
 require('pry')
 require ('pg')
 also_reload('lib/**/*.rb')
 
-DB = PG.connect({:dbname => "record_store"})
+DB = PG.connect({:dbname => "nova_library"})
 
 get('/') do
-  redirect to('/albums')
+  redirect to('/books')
 end
 
 # ALBUM ROUTING:
 
-get('/albums') do
+get('/books') do
   if params["search"]
-    @albums = Album.search(params[:search])
+    @books = Book.search(params[:search])
   elsif params["sort"]
-    @albums = Album.sort()
+    @books = Book.sort()
   else
-    @albums = Album.all
+    @books = Book.all
   end
-  erb(:albums)
+  erb(:books)
 end
 
-get ('/albums/new') do
-  erb(:new_album)
+get ('/books/new') do
+  erb(:new_book)
 end
 
-post ('/albums') do
-  name = params[:album_name]
-  album = Album.new({:name => name, :id => nil})
-  album.save()
-  redirect to('/albums')
+post ('/books') do
+  name = params[:book_name]
+  book = Book.new({:name => name, :id => nil})
+  book.save()
+  redirect to('/books')
 end
 
-get ('/albums/:id') do
-  @album = Album.find(params[:id].to_i())
-  if @album != nil
-    erb(:album)
+get ('/books/:id') do
+  @book = Book.find(params[:id].to_i())
+  if @book != nil
+    erb(:book)
   else
-    erb(:album_error)
-  end
-end
-
-get ('/albums/:id/edit') do
-  @album = Album.find(params[:id].to_i())
-  erb(:edit_album)
-end
-
-patch ('/albums/:id') do
-  @album = Album.find(params[:id].to_i())
-  @album.update(params[:name])
-  redirect to('/albums')
-end
-
-delete ('/albums/:id') do
-  @album = Album.find(params[:id].to_i())
-  @album.delete()
-  redirect to('/albums')
-end
-
-get ('/albums/:id/songs/:song_id') do
-  @song = Song.find(params[:song_id].to_i())
-  if @song != nil
-    erb(:song)
-  else
-    @album = Album.find(params[:id].to_i())
-    erb(:album_error)
+    erb(:book_error)
   end
 end
 
-post ('/albums/:id/songs') do
-  @album = Album.find(params[:id].to_i())
-  song = Song.new({:name => params[:song_name], :album_id => @album.id, :id => nil})
-  song.save()
-  erb(:album)
+get ('/books/:id/edit') do
+  @book = Book.find(params[:id].to_i())
+  erb(:edit_book)
 end
 
-patch ('/albums/:id/songs/:song_id') do
-  @album = Album.find(params[:id].to_i())
-  song = Song.find(params[:song_id].to_i())
-  song.update(params[:name], @album.id)
-  erb(:album)
+patch ('/books/:id') do
+  @book = Book.find(params[:id].to_i())
+  @book.update(params[:name])
+  redirect to('/books')
 end
 
-delete ('/albums/:id/songs/:song_id') do
-  song = Song.find(params[:song_id].to_i())
-  song.delete
-  @album = Album.find(params[:id].to_i())
-  erb(:album)
+delete ('/books/:id') do
+  @book = Book.find(params[:id].to_i())
+  @book.delete()
+  redirect to('/books')
 end
+
+# get ('/books/:id/songs/:song_id') do
+#   @song = Song.find(params[:song_id].to_i())
+#   if @song != nil
+#     erb(:song)
+#   else
+#     @book = Book.find(params[:id].to_i())
+#     erb(:book_error)
+#   end
+# end
+#
+# post ('/books/:id/songs') do
+#   @book = Book.find(params[:id].to_i())
+#   song = Song.new({:name => params[:song_name], :book_id => @book.id, :id => nil})
+#   song.save()
+#   erb(:book)
+# end
+#
+# patch ('/books/:id/songs/:song_id') do
+#   @book = Book.find(params[:id].to_i())
+#   song = Song.find(params[:song_id].to_i())
+#   song.update(params[:name], @book.id)
+#   erb(:book)
+# end
+#
+# delete ('/books/:id/songs/:song_id') do
+#   song = Song.find(params[:song_id].to_i())
+#   song.delete
+#   @book = Book.find(params[:id].to_i())
+#   erb(:book)
+# end
 
 # ARTIST ROUTING:
 
-get('/artists') do
+get('/patrons') do
   if params["search"]
-    @artist = Artist.search(params[:search])
+    @patron = Patron.search(params[:search])
   elsif params["sort"]
-    @artist = Artist.sort()
+    @patron = Patron.sort()
   else
-    @artist = Artist.all
+    @patron = Patron.all
   end
-  erb(:artists)
+  erb(:patrons)
 end
 
-get ('/artists/:id') do
-  @artist = Artist.find(params[:id].to_i())
-  if @artist != nil
-    erb(:artist)
+get ('/patrons/:id') do
+  @patron = Patron.find(params[:id].to_i())
+  if @patron != nil
+    erb(:patron)
   else
-    erb(:album_error)
+    erb(:book_error)
   end
 end
 
-get ('/artist/new') do
-  erb(:new_artist)
+get ('/patron/new') do
+  erb(:new_patron)
 end
 
-post ('/artists') do
-  name = params[:artist_name]
-  @artist = Artist.new({:name => name, :id => nil})
-  @artist.save()
-  redirect to('/artists')
+post ('/patrons') do
+  name = params[:patron_name]
+  @patron = Patron.new({:name => name, :id => nil})
+  @patron.save()
+  redirect to('/patrons')
 end
 
-# post ('/artists/:id') do
-#   name = params[:artist_name]
-#   @artist = Artist.new({:name => name, :id => nil})
-#   @artist.save()
-#   redirect to('/artists')
+# post ('/patrons/:id') do
+#   name = params[:patron_name]
+#   @patron = Patron.new({:name => name, :id => nil})
+#   @patron.save()
+#   redirect to('/patrons')
 # end
 
 
-post ('/artists/:id') do
-  name = params[:album_name]
+post ('/patrons/:id') do
+  name = params[:book_name]
   id = params[:id]
-  @artist = Artist.find(params[:id].to_i())
-  album = Album.new({:name => name, :id => id})
-  album.save()
-  @artist.update({:album_name => name})
-  redirect to('/artists')
+  @patron = Patron.find(params[:id].to_i())
+  book = Book.new({:name => name, :id => id})
+  book.save()
+  @patron.update({:book_name => name})
+  redirect to('/patrons')
 end
 
 
-patch ('/artists/:id') do
-  @artist = Artist.find(params[:id].to_i())
-  @artist.update(params[:name])
-  redirect to('/artists')
+patch ('/patrons/:id') do
+  @patron = Patron.find(params[:id].to_i())
+  @patron.update(params[:name])
+  redirect to('/patrons')
 end
 
-delete ('/artists/:id') do
-  @artist = Artist.find(params[:id].to_i())
-  @artist.delete()
-  redirect to('/artists')
+delete ('/patrons/:id') do
+  @patron = Patron.find(params[:id].to_i())
+  @patron.delete()
+  redirect to('/patrons')
 end

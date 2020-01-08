@@ -1,12 +1,12 @@
-<h1>All Sales Vinyl</h1>
+<h1>Nova Library</h1>
 
-<h3>Available Artists</h3>
-
-
-<a href="/artists"><p class="btn-lg btn-primary">All artist</p></a>
+<h3>Available Patrons</h3>
 
 
-<form action="/artist">
+<a href="/patrons"><p class="btn-lg btn-primary">All patron</p></a>
+
+
+<form action="/patron">
   <div class="form-group row">
     <label for="search" class="col-sm-2 col-form-label col-form-label-lg"></label>
     <div class="col-sm-4">
@@ -20,14 +20,14 @@
   </div>
 </form>
 
-<% if @artist.any? %>
+<% if @patron.any? %>
 <ul>
-  <% @artist.each do |artist| %>
-  <li><a href="/artists/<%= artist.id %>"><%= artist.name %></a></li>
+  <% @patron.each do |patron| %>
+  <li><a href="/patrons/<%= patron.id %>"><%= patron.name %></a></li>
   <% end %>
 </ul>
 <% else %>
 <p>There are currently no records to display.</p>
 <% end %>
 
-<a href="/artist/new">Add a new artist</a>
+<a href="/patron/new">Add a new patron</a>

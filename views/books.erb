@@ -1,12 +1,12 @@
-<h1>All Sales Vinyl</h1>
+<h1>Nova Library</h1>
 
-<h3>Available Records</h3>
-
-
-<a href="/albums"><p class="btn-lg btn-primary">All albums</p></a>
+<h3>Available Books</h3>
 
 
-<form action="/albums">
+<a href="/books"><p class="btn-lg btn-primary">All books</p></a>
+
+
+<form action="/books">
   <div class="form-group row">
     <label for="search" class="col-sm-2 col-form-label col-form-label-lg"></label>
     <div class="col-sm-4">
@@ -20,14 +20,14 @@
   </div>
 </form>
 
-<% if @albums.any? %>
+<% if @books.any? %>
 <ul>
-  <% @albums.each do |album| %>
-  <li><a href="/albums/<%= album.id %>"><%= album.name %></a></li>
+  <% @books.each do |book| %>
+  <li><a href="/books/<%= book.id %>"><%= book.name %></a></li>
   <% end %>
 </ul>
 <% else %>
 <p>There are currently no records to display.</p>
 <% end %>
 
-<a href="/albums/new">Add a new album</a>
+<a href="/books/new">Add a new book</a>

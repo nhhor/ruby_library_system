@@ -1,3 +1,4 @@
+# name = title?
 class Book
   attr_accessor :name, :id
 

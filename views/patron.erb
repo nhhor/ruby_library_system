@@ -1,0 +1,27 @@
+<h2>Patron Name: <%= @patron.name %></h2>
+
+<h3>Patron Books</h3>
+
+  <% if @patron.books %>
+    <ul>
+      <% @patron.books.each do |book| %>
+        <li><a href="/patrons/<%= @patron.id %>/books/<%= book.id %>"><%= book.name %></a></li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>There are no books listed for this patron yet.</p>
+  <% end %>
+
+<h4>Add a book:</h4>
+
+<form action="/patrons/<%= @patron.id %>" method="post">
+  <div class="form-group">
+    <label for="book_name">Book name</label>
+    <input id="book_name" name="book_name" class="form-control" type="text" required>
+  </div>
+  <button type="submit" class="btn">Add book</button>
+</form>
+
+
+<p><a href="/patrons/<%= @patron.id %>/edit">Edit patron</a></p>
+<p><a href="/patrons">Return to patron list</a></p>
