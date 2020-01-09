@@ -59,13 +59,18 @@ class Patron
     end
   end
 
+
+THERE IS AN ERROR HERE...
   def update(attributes)
-    # binding.pry
-    if (attributes.has_key?(:name)) && (attributes.fetch(:name) != nil)
-      @name = attributes.fetch(:name)
+    # if (attributes.has_key?(:name)) && (attributes.fetch(:name) != nil)
+      # @name = attributes.fetch(:name)
+      # binding.pry
+      @name = attributes
+
       DB.exec("UPDATE patrons SET name = '#{@name}' WHERE id = #{@id};")
-    end
-    book_name = attributes.fetch(:book_name)
+    # end
+    book_name = attributes.fetch(:book_name, nil)
+    # keep ", nil" above?
     if book_name != nil
       book = DB.exec("SELECT * FROM books WHERE lower(name)='#{book_name.downcase}';").first
       if book != nil

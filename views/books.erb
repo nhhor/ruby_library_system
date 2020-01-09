@@ -1,27 +1,58 @@
-<h3>Available Books</h3>
 
-<form action="/books">
-  <div class="form-group row">
-    <label for="search" class="col-sm-2 col-form-label col-form-label-lg"></label>
-    <div class="col-sm-4">
-      <input id="search" name="search" class="form-control form-control-lg" type="text" placeholder="Search">
-    </div>
-    <div class="col-sm-4">
-      <button type="submit" class="btn btn-primary">Search</button>
-    </div>
-    <label for="search" class="col-sm-2 col-form-label col-form-label-lg"></label>
+
+<div class="row">
+
+
+
+  <div class="col-md-3">
+
+
+    <h3>All Books</h3>
+
+
+
+    <% if @books.any? %>
+    <ul>
+      <% @books.each do |book| %>
+      <li><a href="/books/<%= book.id %>"><%= book.name %></a></li>
+      <% end %>
+    </ul>
+    <% else %>
+    <p>There are currently no records to display.</p>
+    <% end %>
+
 
   </div>
-</form>
 
-<% if @books.any? %>
-<ul>
-  <% @books.each do |book| %>
-  <li><a href="/books/<%= book.id %>"><%= book.name %></a></li>
-  <% end %>
-</ul>
-<% else %>
-<p>There are currently no records to display.</p>
-<% end %>
+  <div class="col-md-6">
+    <form action="/books">
+      <div class="form-group row">
+        <label for="search" class="col-sm-2 col-form-label col-form-label-lg"></label>
+        <div class="col-sm-4">
+          <input id="search" name="search" class="form-control form-control-lg" type="text" placeholder="Search">
+        </div>
+        <div class="col-sm-4">
+          <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+        <label for="search" class="col-sm-2 col-form-label col-form-label-lg"></label>
 
-<a href="/books/new">Add a new book</a>
+      </div>
+    </form>
+    <hr>
+    <div class="alignCenter">
+      <a href="/books/new">Add a new book</a>
+
+    </div>
+    <hr>
+  </div>
+
+  <div class="col-md-3">
+
+  </div>
+
+
+
+
+
+
+</div>

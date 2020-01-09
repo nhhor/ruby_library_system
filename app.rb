@@ -1,3 +1,4 @@
+
 require('sinatra')
 require('sinatra/reloader')
 require('./lib/book')
@@ -57,14 +58,14 @@ patch ('/books/:id') do
   redirect to('/books')
 
 
-# elsif (params["return_book"] = "true")
-#   puts "COOL2"
-#   @book = Book.find(params[:id].to_i())
-#   @book.return_book()
-#   redirect to('/books')
-#
-#   Patron.return_book
-#   erb(:patron)
+  # elsif (params["return_book"] = "true")
+  #   puts "COOL2"
+  #   @book = Book.find(params[:id].to_i())
+  #   @book.return_book()
+  #   redirect to('/books')
+  #
+  #   Patron.return_book
+  #   erb(:patron)
 
 
 end
@@ -131,6 +132,11 @@ get ('/patrons/:id') do
   end
 end
 
+get ('/patrons/:id/edit') do
+  @patron = Patron.find(params[:id].to_i())
+  erb(:edit_patron)
+end
+
 get ('/patron/new') do
   erb(:new_patron)
 end
@@ -144,26 +150,19 @@ end
 
 post ('/patrons/:id') do
   if params[:book_name]
-
-  name = params[:book_name]
-  id = params[:id]
-  # binding.pry
-  @patron = Patron.find(params[:id].to_i())
-  @patron.update({:book_name => name})
-  redirect to('/patrons')
-elsif params[:book_id]
-
-
-
-# IF ELSE HERE ????????????
-
-  @patron = Patron.find(params[:id].to_i())
-  @patron.return_book(params[:book_id].to_i)
-  redirect to('/patrons')
-end
+    name = params[:book_name]
+    id = params[:id]
+    # binding.pry
+    @patron = Patron.find(params[:id].to_i())
+    @patron.update({:book_name => name})
+    redirect to('/patrons')
+  elsif params[:book_id]
+    @patron = Patron.find(params[:id].to_i())
+    @patron.return_book(params[:book_id].to_i)
+    redirect to("/patrons/#{params[:id]}")
+  end
 
 end
-
 
 patch ('/patrons/:id') do
   @patron = Patron.find(params[:id].to_i())
@@ -176,10 +175,3 @@ delete ('/patrons/:id') do
   @patron.delete()
   redirect to('/patrons')
 end
-
-
-# return_book ('/patrons/:id') do
-#   @patron = Patron.find(params[:id].to_i())
-#   @patron.return_book()
-#   redirect to('/patrons')
-# end
