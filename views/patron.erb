@@ -1,40 +1,48 @@
-<h2>Patron Name: <%= @patron.name %></h2>
+<h2 class="alignCenter">Patron Name: <%= @patron.name %></h2>
 
-<h3>Patron Books</h3>
+<div class="row">
 
-<% if @patron.books %>
-<ul>
-  <% @patron.books.each do |book| %>
-  <li>
-    <form action="/patrons/<%= @patron.id() %>" method="post">
-      <a href="/books/<%= book.id %>"><%= book.name %></a> |
-      <input name="book_id" type="hidden" value="<%=book.id%>">
-      <button type="submit" class="btn btn-warning">Return book</button>
-    </form>
-  </li>
-  <% end %>
-</ul>
-<% else %>
-<p>There are no books listed for this patron yet.</p>
-<% end %>
-
-<h4>Check out a book:</h4>
-
-<form action="/patrons/<%= @patron.id %>" method="post">
-  <div class="form-group">
-    <label for="book_name">Book name</label>
-    <!-- <input id="book_name" name="book_name" class="form-control" type="text" required> -->
-    <select name="book_name">
-      <% @book = Book.available_books %>
-      <% @book.each do |book| %>
-      <option value="<%=book.name%>"><%= book.name %></option>
+  <div class="col-md-4">
+    <h3>Patron Books</h3>
+    <% if @patron.books %>
+    <ul>
+      <% @patron.books.each do |book| %>
+      <li>
+        <form action="/patrons/<%= @patron.id() %>" method="post">
+          <a href="/books/<%= book.id %>"><%= book.name %></a> |
+          <input name="book_id" type="hidden" value="<%=book.id%>">
+          <button type="submit" class="btn btn-warning">Return book</button>
+        </form>
+      </li>
       <% end %>
-    </select> |
-    <button type="submit" class="btn btn-info">Checkout book</button>
-
+    </ul>
+    <% else %>
+    <p>There are no books listed for this patron yet.</p>
+    <% end %>
   </div>
-</form>
+  <div class="col-md-5">
+    <h3>Check out a book:</h3>
 
+    <form action="/patrons/<%= @patron.id %>" method="post">
+      <div class="form-group">
+        <label for="book_name">Book name</label>
+        <!-- <input id="book_name" name="book_name" class="form-control" type="text" required> -->
+        <select name="book_name">
+          <% @book = Book.available_books %>
+          <%# <% binding.pry %> %>
+          <% @book.each do |book| %>
+          <option value="<%=book.name%>"><%= book.name %></option>
+          <% end %>
+        </select> |
+        <button type="submit" class="btn btn-info">Checkout book</button>
 
-<p><a href="/patrons/<%= @patron.id %>/edit">Edit patron</a></p>
-<p><a href="/patrons">Return to patron list</a></p>
+      </div>
+    </form>
+  </div>
+  <div class="col-md-3">
+    <h3>Options:</h3>
+
+    <p><a href="/patrons/<%= @patron.id %>/edit">Edit patron</a></p>
+    <p><a href="/patrons">Return to patron list</a></p>
+  </div>
+</div>

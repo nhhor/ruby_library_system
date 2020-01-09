@@ -1,4 +1,3 @@
-# name = title?
 class Book
   attr_accessor :name, :id
 
@@ -27,7 +26,7 @@ class Book
     end
     available_books = []
     if unavailable_books_id_array != []
-      query_of_ids =  DB.exec("SELECT * FROM books WHERE id NOT IN (#{unavailable_books_id_array.join(", ")});")
+      query_of_ids =  DB.exec("SELECT * FROM books WHERE id NOT IN (#{unavailable_books_id_array.join(", ")}) ORDER BY name;")
       query_of_ids.each() do |query|
         book_id = query.fetch("id").to_i()
         name = query.fetch("name")
@@ -35,8 +34,13 @@ class Book
       end
       available_books
     else
-      puts "error"
-      NIL
+      query_of_ids =  DB.exec("SELECT * FROM books ORDER BY name;")
+      query_of_ids.each() do |query|
+        book_id = query.fetch("id").to_i()
+        name = query.fetch("name")
+        available_books.push(Book.new({:name => name, :id => book_id}))
+      end
+      available_books
     end
   end
 
@@ -50,8 +54,6 @@ class Book
     end
     books.sort_by { |book| [book.name] }
   end
-
-
 
   def save
     result = DB.exec("INSERT INTO books (name) VALUES ('#{@name}') RETURNING id;")

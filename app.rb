@@ -155,7 +155,7 @@ post ('/patrons/:id') do
     # binding.pry
     @patron = Patron.find(params[:id].to_i())
     @patron.update({:book_name => name})
-    redirect to('/patrons')
+    redirect to("/patrons/#{params[:id]}")
   elsif params[:book_id]
     @patron = Patron.find(params[:id].to_i())
     @patron.return_book(params[:book_id].to_i)
@@ -167,7 +167,7 @@ end
 patch ('/patrons/:id') do
   @patron = Patron.find(params[:id].to_i())
   @patron.update(params[:name])
-  redirect to('/patrons')
+  redirect to("/patrons/#{params[:id]}")
 end
 
 delete ('/patrons/:id') do

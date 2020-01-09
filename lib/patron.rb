@@ -59,22 +59,17 @@ class Patron
     end
   end
 
-
-THERE IS AN ERROR HERE...
   def update(attributes)
-    # if (attributes.has_key?(:name)) && (attributes.fetch(:name) != nil)
-      # @name = attributes.fetch(:name)
-      # binding.pry
+    if (attributes.is_a? String)
       @name = attributes
-
       DB.exec("UPDATE patrons SET name = '#{@name}' WHERE id = #{@id};")
-    # end
-    book_name = attributes.fetch(:book_name, nil)
-    # keep ", nil" above?
-    if book_name != nil
-      book = DB.exec("SELECT * FROM books WHERE lower(name)='#{book_name.downcase}';").first
-      if book != nil
-        DB.exec("INSERT INTO books_patrons (book_id, patron_id) VALUES (#{book['id'].to_i}, #{@id});")
+    else
+      book_name = attributes.fetch(:book_name)
+      if book_name != nil
+        book = DB.exec("SELECT * FROM books WHERE lower(name)='#{book_name.downcase}';").first
+        if book != nil
+          DB.exec("INSERT INTO books_patrons (book_id, patron_id) VALUES (#{book['id'].to_i}, #{@id});")
+        end
       end
     end
   end
@@ -89,7 +84,6 @@ THERE IS AN ERROR HERE...
   end
 
   def books
-
     books = []
     results = DB.exec("SELECT book_id FROM books_patrons WHERE patron_id = #{@id};")
     result_id_array = []
@@ -105,12 +99,9 @@ THERE IS AN ERROR HERE...
       end
       books
     else
-      puts "error"
+      puts "NOVA error in patron.books"
       NIL
     end
   end
-
-
-
 
 end
