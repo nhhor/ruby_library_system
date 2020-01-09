@@ -3,7 +3,7 @@ require('sinatra')
 require('sinatra/reloader')
 require('./lib/book')
 require('./lib/patron')
-# require('./lib/song')
+require('./lib/author')
 require('pry')
 require ('pg')
 also_reload('lib/**/*.rb')
@@ -14,7 +14,7 @@ get('/') do
   redirect to('/books')
 end
 
-# ALBUM ROUTING:
+# BOOK ROUTING:
 
 get('/books') do
   if params["search"]
@@ -109,7 +109,7 @@ end
 #   erb(:book)
 # end
 
-# ARTIST ROUTING:
+# PATRON ROUTING:
 
 get('/patrons') do
   if params["search"]
@@ -174,4 +174,71 @@ delete ('/patrons/:id') do
   @patron = Patron.find(params[:id].to_i())
   @patron.delete()
   redirect to('/patrons')
+end
+
+# AUTHOR ROUTING:
+
+get('/authors') do
+  if params["search"]
+    @author = Author.search(params[:search])
+  elsif params["sort"]
+    @author = Author.sort()
+  else
+    @author = Author.all
+  end
+  erb(:authors)
+end
+
+get ('/authors/:id') do
+  @author = Author.find(params[:id].to_i())
+  if @author != nil
+    erb(:author)
+
+  else
+    erb(:book_error)
+  end
+end
+
+get ('/authors/:id/edit') do
+  @author = Author.find(params[:id].to_i())
+  erb(:edit_author)
+end
+
+get ('/author/new') do
+  erb(:new_author)
+end
+
+post ('/authors') do
+  name = params[:author_name]
+  @author = Author.new({:name => name, :id => nil})
+  @author.save()
+  redirect to('/authors')
+end
+
+post ('/authors/:id') do
+  if params[:book_name]
+    name = params[:book_name]
+    id = params[:id]
+    # binding.pry
+    @author = Author.find(params[:id].to_i())
+    @author.update({:book_name => name})
+    redirect to("/authors/#{params[:id]}")
+  elsif params[:book_id]
+    @author = Author.find(params[:id].to_i())
+    @author.return_book(params[:book_id].to_i)
+    redirect to("/authors/#{params[:id]}")
+  end
+
+end
+
+patch ('/authors/:id') do
+  @author = Author.find(params[:id].to_i())
+  @author.update(params[:name])
+  redirect to("/authors/#{params[:id]}")
+end
+
+delete ('/authors/:id') do
+  @author = Author.find(params[:id].to_i())
+  @author.delete()
+  redirect to('/authors')
 end

@@ -3,10 +3,20 @@
 <h3>Book Authors</h3>
 
 
-<!-- ADD BOOK AUTHOR(S) -->
+
+
+<ul>
 
 
 
+
+  <% @book.authors.each do |author| %>
+  <li><%= author.name %></li>
+  <% end %>
+
+
+
+</ul>
 
 
 

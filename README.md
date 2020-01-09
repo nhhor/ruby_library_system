@@ -33,10 +33,11 @@ This application was made as part of a coding project for Noah Horwitz & Eva Wie
 
 CREATE DATABASE nova_library;
 \c nova_library;
+CREATE TABLE authors (id serial PRIMARY KEY, name varchar);
 CREATE TABLE books (id serial PRIMARY KEY, name varchar);
 CREATE TABLE patrons (id serial PRIMARY KEY, name varchar);
+CREATE TABLE books_authors (id serial PRIMARY KEY, author_id int, book_id int);
 CREATE TABLE books_patrons (id serial PRIMARY KEY, patron_id int, book_id int);
-
 
 
 

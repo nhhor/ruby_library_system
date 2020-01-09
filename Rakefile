@@ -16,7 +16,7 @@ task :build, [:db_name] do |t, args|
 end
 
 desc 'Create a database and test database from a BLANK database template dump'
-task :build, [:db_name] do |t, args|
+task :create, [:db_name] do |t, args|
   system("createdb #{args.db_name}")
   system("psql #{args.db_name} < database_template.sql")
   system("createdb -T #{args.db_name} #{args.db_name + '_test'}")

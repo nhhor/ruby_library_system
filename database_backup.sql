@@ -245,6 +245,9 @@ ALTER TABLE ONLY public.patrons ALTER COLUMN id SET DEFAULT nextval('public.patr
 --
 
 COPY public.authors (id, name) FROM stdin;
+1	author1
+2	author2
+3	author3
 \.
 
 
@@ -253,6 +256,11 @@ COPY public.authors (id, name) FROM stdin;
 --
 
 COPY public.books (id, name) FROM stdin;
+1	book1
+2	book2
+3	book3
+4	book4
+5	book5
 \.
 
 
@@ -261,6 +269,8 @@ COPY public.books (id, name) FROM stdin;
 --
 
 COPY public.books_authors (id, author_id, book_id) FROM stdin;
+8	2	1
+15	3	1
 \.
 
 
@@ -277,6 +287,11 @@ COPY public.books_patrons (id, patron_id, book_id) FROM stdin;
 --
 
 COPY public.patrons (id, name) FROM stdin;
+1	patron1
+2	patron2
+3	patron3
+4	patron4
+5	patron5
 \.
 
 
@@ -284,35 +299,35 @@ COPY public.patrons (id, name) FROM stdin;
 -- Name: authors_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Guest
 --
 
-SELECT pg_catalog.setval('public.authors_id_seq', 1, false);
+SELECT pg_catalog.setval('public.authors_id_seq', 3, true);
 
 
 --
 -- Name: books_authors_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Guest
 --
 
-SELECT pg_catalog.setval('public.books_authors_id_seq', 1, false);
+SELECT pg_catalog.setval('public.books_authors_id_seq', 15, true);
 
 
 --
 -- Name: books_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Guest
 --
 
-SELECT pg_catalog.setval('public.books_id_seq', 1, false);
+SELECT pg_catalog.setval('public.books_id_seq', 5, true);
 
 
 --
 -- Name: books_patrons_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Guest
 --
 
-SELECT pg_catalog.setval('public.books_patrons_id_seq', 1, false);
+SELECT pg_catalog.setval('public.books_patrons_id_seq', 3, true);
 
 
 --
 -- Name: patrons_id_seq; Type: SEQUENCE SET; Schema: public; Owner: Guest
 --
 
-SELECT pg_catalog.setval('public.patrons_id_seq', 1, false);
+SELECT pg_catalog.setval('public.patrons_id_seq', 5, true);
 
 
 --

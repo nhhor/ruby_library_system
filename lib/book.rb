@@ -93,7 +93,35 @@ class Book
     # DB.exec("DELETE FROM songs WHERE book_id = #{@id};")
   end
 
-  # def songs
-  #   Song.find_by_book(self.id)
+  def authors
+    var = DB.exec("SELECT * FROM books_authors WHERE book_id = #{@id};")
+    var.map do |element|
+      Author.find(element.fetch('author_id'))
+    end
+  end
+
+
+  # def authors
+  #   books = []
+  #   results = DB.exec("SELECT * FROM books_authors WHERE book_id = #{@id};")
+  #   result_id_array = []
+  #   results.each() do |result|
+  #     result_id_array.push(result.values)
+  #   end
+  #   if result_id_array != []
+  #     query_of_ids =  DB.exec("SELECT * FROM books WHERE id IN (#{result_id_array.join(", ")});")
+  #     query_of_ids.each() do |query|
+  #       book_id = query.fetch("id").to_i()
+  #       name = query.fetch("name")
+  #       books.push(Book.new({:name => name, :id => book_id}))
+  #     end
+  #     books
+  #   else
+  #     puts "NOVA error in patron.books"
+  #     NIL
+  #   end
   # end
+
+
+
 end

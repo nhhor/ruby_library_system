@@ -1,0 +1,27 @@
+<h3>Available Authors</h3>
+
+<form action="/authors">
+  <div class="form-group row">
+    <label for="search" class="col-sm-2 col-form-label col-form-label-lg"></label>
+    <div class="col-sm-4">
+      <input id="search" name="search" class="form-control form-control-lg" type="text" placeholder="Search">
+    </div>
+    <div class="col-sm-4">
+      <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+    <label for="search" class="col-sm-2 col-form-label col-form-label-lg"></label>
+
+  </div>
+</form>
+
+<% if @author.any? %>
+<ul>
+  <% @author.each do |author| %>
+  <li><a href="/authors/<%= author.id %>"><%= author.name %></a></li>
+  <% end %>
+</ul>
+<% else %>
+<p>There are currently no records to display.</p>
+<% end %>
+
+<a href="/author/new">Add a new author</a>

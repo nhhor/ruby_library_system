@@ -1,0 +1,48 @@
+<h2 class="alignCenter">Author Name: <%= @author.name %></h2>
+
+<div class="row">
+
+  <div class="col-md-4">
+    <h3>Author's Books</h3>
+    <% if @author.books %>
+    <ul>
+      <% @author.books.each do |book| %>
+      <li>
+        <form action="/authors/<%= @author.id() %>" method="post">
+          <a href="/books/<%= book.id %>"><%= book.name %></a> |
+          <input name="book_id" type="hidden" value="<%=book.id%>">
+          <button type="submit" class="btn btn-warning">Unassign Author from Book</button>
+        </form>
+      </li>
+      <% end %>
+    </ul>
+    <% else %>
+    <p>This author has no books yet.</p>
+    <% end %>
+  </div>
+  <div class="col-md-5">
+    <h3>Assign a book:</h3>
+
+    <form action="/authors/<%= @author.id %>" method="post">
+      <div class="form-group">
+        <label for="book_name">Book name</label>
+        <!-- <input id="book_name" name="book_name" class="form-control" type="text" required> -->
+        <select name="book_name">
+          <% @book = Book.available_books %>
+          <%# <% binding.pry %> %>
+          <% @book.each do |book| %>
+          <option value="<%=book.name%>"><%= book.name %></option>
+          <% end %>
+        </select> |
+        <button type="submit" class="btn btn-info">Assign Author to Book</button>
+
+      </div>
+    </form>
+  </div>
+  <div class="col-md-3">
+    <h3>Options:</h3>
+
+    <p><a href="/authors/<%= @author.id %>/edit">Edit author</a></p>
+    <p><a href="/authors">Return to author list</a></p>
+  </div>
+</div>
