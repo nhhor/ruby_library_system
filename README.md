@@ -34,15 +34,9 @@ This application was made as part of a coding project for Noah Horwitz & Eva Wie
 CREATE DATABASE nova_library;
 \c nova_library;
 CREATE TABLE books (id serial PRIMARY KEY, name varchar);
-<!-- CREATE TABLE songs (id serial PRIMARY KEY, name varchar, book_id int); -->
-
 CREATE TABLE patrons (id serial PRIMARY KEY, name varchar);
-
 CREATE TABLE books_patrons (id serial PRIMARY KEY, patron_id int, book_id int);
 
-DROP DATABASE nova_library_test;
-
-CREATE DATABASE nova_library_test WITH TEMPLATE nova_library;
 
 
 
@@ -55,6 +49,5 @@ Contact [example@sample.com](mailto:example@sample.com)
 _This This repository is copyright (C) 2019 by Noah Horwitz & Eva Wiedmann and licensed under the GNU General Public License v3.0 [gpl-3.0](https://www.gnu.org/licenses/gpl-3.0.en.html)_.
 
 ## TASKS
-practice database dump
-1-many
-rake homework for dump / creation
+authors..?
+1-many..-
